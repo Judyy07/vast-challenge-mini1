@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据可视化demo</title>
+    <link href="../styles/common.css" rel="stylesheet">
+    <script src="../scripts/Plugin/jquery-3.3.1.min.js"></script>
+    <script src="../scripts/Plugin/echarts.min.js"></script>
+    <script src="../scripts/Plugin/bmap.min.js"></script>
+    <script src="../scripts/common.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="../scripts/quota.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+<!--顶部-->
+<header class="header left">
+    <div class="left nav">
+        <ul>
+            <li class="nav_active"><i class="nav_1"></i><a href="index.html">Answer</a> </li>
+            <li><i class="nav_2"></i><a href="quota.html">Summary</a> </li>
+            <li><i class="nav_3"></i><a href="trend.html">DF Diagram</a> </li>
+            <li><i class="nava_4"></i><a href="chronic.html">Circular</a> </li>
+            </ul>
+    </div>
+    <div class="header_center left" style="position:relative">
+        
+        <h2><strong>Illegal Fishing Detection</a></stroMng></h2>
+
+    </div>
+    <div class="right nav text_right">
+      <ul>
+        <li><a href="kmeans.html">K-means</a></li>
+        <li><a href="niu.html">ParallelGraph</a></li>
+        <li><a href="sunburst.html">DBSCAN</a></liniu>
+        <li><a href="meanShift.html">MeanShift</a></li>
+    </ul>
+    </div>
+
+</header>
+    <!--统计分析图-->
+    <div class="div_any">
+        <div class="left div_any01">
+            <div class="div_any_child">
+                <div class="div_any_title">nodes' type</div>
+                <p id="histogramChart1" class="p_chart"></p>
+            </div>
+            <div class="div_any_child">
+                <div class="div_any_title">links' type</div>
+                <p id="histogramChart2" class="p_chart"></p>
+            </div>
+        </div>
+        <div class="left div_any01">
+            <div class="div_any_child">
+                <div class="div_any_title">oragnization-links</div>
+                <p id="histogramChart5" class="p_chart"></p>
+            </div>
+            <div class="div_any_child">
+                <div class="div_any_title">vessel-links</div>
+                <p id="histogramChart6" class="p_chart"></p>
+            </div>
+        </div>
+        <div class="left div_any01">
+            <div class="div_any_child">
+                <div class="div_any_title">person-links</div>
+                <p id="histogramChart3" class="p_chart"></p>
+            </div>
+            <div class="div_any_child">
+                <div class="div_any_title">company-links</div>
+                <p id="histogramChart4" class="p_chart"></p>
+            </div>
+        </div>
+        <div class="left div_any01">
+            <div class="div_any_child">
+                <div class="div_any_title">person-country</div>
+                <p id="pieChart1" class="p_chart"></p>
+            </div>
+            <div class="div_any_child">
+                <div class="div_any_title">company-country</div>
+                <p id="pieChart2" class="p_chart"></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

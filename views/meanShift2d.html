@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>数据可视化demo</title>
+    <link href="../styles/common.css" rel="stylesheet">
+    <script src="../scripts/Plugin/jquery-3.3.1.min.js"></script>
+    <script src="../scripts/Plugin/echarts.min.js"></script>
+    <script src="../scripts/Plugin/bmap.min.js"></script>
+    <script src="../scripts/common.js"></script>
+    <script src="../scripts/index.js"></script>
+    <style>
+        body {
+            background-color: white;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="three.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <style type="text/css">
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+    
+    </style>
+</head>
+
+<body>
+    <header class="header left">
+        <div class="left nav">
+            <ul>
+                <li class="nav_active"><i class="nav_1"></i><a href="index.html">Answer</a> </li>
+                <li><i class="nav_2"></i><a href="quota.html">Summary</a> </li>
+                <li><i class="nav_3"></i><a href="trend.html">DF Diagram</a> </li>
+                <li><i class="nava_4"></i><a href="chronic.html">Circular</a> </li>
+                </ul>
+        </div>
+        <div class="header_center left" style="position:relative">
+            
+            <h2><strong>Illegal Fishing Detection</a></stroMng></h2>
+    
+        </div>
+        <div class="right nav text_right">
+          <ul>
+            <li><a href="kmeans.html">K-means</a></li>
+            <li><a href="niu.html">ParallelGraph</a></li>
+            <li><a href="sunburst.html">DBSCAN</a></liniu>
+            <li><a href="meanShift.html">MeanShift</a></li>
+        </ul>
+        </div>
+    
+    </header>
+
+    <div id="file-name-container">
+        <select id="pageSelect">
+            <option value="meanShift2d.html">PAC_to_2d</option>
+            <option value="meanShift.html">PAC_to_3d</option>
+            <option value="meanShiftTSNE.html">TSNE_to_3d</option>
+        </select>
+        <span>&nbsp;&nbsp;</span>
+        <span>&nbsp;&nbsp;</span>
+        <button id="submit-button", onclick="redirectToSelectedPage()">Submit</button>
+    </div>
+    <script>
+
+    function redirectToSelectedPage() {
+        var selectElement = document.getElementById("pageSelect");
+        var selectedValue = selectElement.value;
+        if (selectedValue) {
+            window.location.href = selectedValue;
+        }
+    } 
+    </script>
+    <script src="d3.min.js"></script>
+    <script src="./scatter_plot.js"></script>
+</body>
+</html>

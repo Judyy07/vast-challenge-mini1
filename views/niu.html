@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>数据可视化demo</title>
+    <link href="../styles/common.css" rel="stylesheet">
+    <script src="../scripts/Plugin/jquery-3.3.1.min.js"></script>
+    <script src="../scripts/Plugin/echarts.min.js"></script>
+    <script src="../scripts/Plugin/bmap.min.js"></script>
+    <script src="../scripts/common.js"></script>
+    <script src="../scripts/index.js"></script>
+    <script src="../scripts/Plugin/laydate/laydate.js"></script>
+    <style>
+        body {
+            background-color: white;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<!--顶部-->
+<header class="header left">
+    <div class="left nav">
+        <ul>
+            <li class="nav_active"><i class="nav_1"></i><a href="index.html">Answer</a> </li>
+            <li><i class="nav_2"></i><a href="quota.html">Summary</a> </li>
+            <li><i class="nav_3"></i><a href="trend.html">DF Diagram</a> </li>
+            <li><i class="nava_4"></i><a href="chronic.html">Circular</a> </li>
+            </ul>
+    </div>
+    <div class="header_center left" style="position:relative">
+        
+        <h2><strong>Illegal Fishing Detection</a></stroMng></h2>
+
+    </div>
+    <div class="right nav text_right">
+      <ul>
+        <li><a href="kmeans.html">K-means</a></li>
+        <li><a href="niu.html">ParallelGraph</a></li>
+        <li><a href="sunburst.html">DBSCAN</a></liniu>
+        <li><a href="meanShift.html">MeanShift</a></li>
+    </ul>
+    </div>
+
+</header>
+    <div id="inputDiv" style=" top: 10px; left: 10px;">
+        <input type="text" id="kInput" placeholder="Enter k">
+        <button onclick="loadData()">Load Data</button>
+    </div>
+
+    <div id="chartDiv"></div>
+
+    <div>
+        <svg id="chart" preserveAspectRatio="xMidYMin meet" style="position: absolute; width: 90%; height: 90%;"></svg>
+    </div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+</body>
+</html>

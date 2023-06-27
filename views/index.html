@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据可视化demo</title>
+    <link href="../styles/common.css" rel="stylesheet">
+    <script src="../scripts/Plugin/jquery-3.3.1.min.js"></script>
+    <script src="../scripts/Plugin/echarts.min.js"></script>
+    <script src="../scripts/Plugin/bmap.min.js"></script>
+    <script src="../scripts/common.js"></script>
+    <script src="../scripts/index.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+  </head>
+</head>
+<body>
+<!--顶部-->
+<header class="header left">
+    <div class="left nav">
+        <ul>
+            <li class="nav_active"><i class="nav_1"></i><a href="index.html">Answer</a> </li>
+            <li><i class="nav_2"></i><a href="quota.html">Summary</a> </li>
+            <li><i class="nav_3"></i><a href="trend.html">DF Diagram</a> </li>
+            <li><i class="nava_4"></i><a href="chronic.html">Circular</a> </li>
+            </ul>
+    </div>
+    <div class="header_center left" style="position:relative">
+        
+        <h2><strong>Illegal Fishing Detection</a></stroMng></h2>
+
+    </div>
+    <div class="right nav text_right">
+      <ul>
+        <li><a href="kmeans.html">K-means</a></li>
+        <li><a href="niu.html">ParallelGraph</a></li>
+        <li><a href="sunburst.html">DBSCAN</a></liniu>
+        <li><a href="meanShift.html">MeanShift</a></li>
+    </ul>
+    </div>
+
+</header>
+<input type="text" id="searchInput" placeholder="Search by ID">
+<button id="searchButton">Search</button>
+<br><br>
+
+<script>
+    // Load and parse the JSON data
+    fetch('MC1.json')
+      .then(response => response.json())
+      .then(jsonData => {
+        // Function to handle node click and display relationships
+        function handleNodeClick(nodeId) {
+          var node = jsonData.nodes.find(function(n) {
+            return String(n.id) === String(nodeId);
+          });
+
+          if (node) {
+            var relationships = jsonData.links.filter(function(link) {
+              return String(link.source) === String(node.id) || String(link.target) === String(node.id);
+            });
+
+            var nodeInfo = "ID: " + node.id + "<br>Type: " + (node.type || "unknown") + "<br>Dataset: " + node.dataset;
+            var relationshipInfo = "<br><br><strong>Relationships:</strong><br>";
+
+            for (var j = 0; j < relationships.length; j++) {
+              relationshipInfo += "Type: " + relationships[j].type + "<br>Source: " + relationships[j].source + "<br>Target: " + relationships[j].target + "<br>Weight: " + relationships[j].weight + "<br><br>";
+            }
+
+            var newWindow = window.open("", "_blank", "width=600,height=400,top=100,left=100");
+            newWindow.document.write("<html><head><title>Node Details</title></head><body><h1>Node Details</h1><p>" + nodeInfo + relationshipInfo + "</p></body></html>");
+            newWindow.document.close();
+          } else {
+            alert("Node not found!");
+          }
+        }
+
+        // Function to execute node search
+        function executeSearch() {
+          var input = document.getElementById("searchInput");
+          var nodeId = input.value;
+
+          if (nodeId) {
+            handleNodeClick(nodeId);
+          } else {
+            alert("Please enter a valid node ID!");
+          }
+        }
+
+        // Populate the table with initial data
+        function populateTable() {
+          var table = document.getElementById("nodeTable");
+          var tbody = document.getElementById("nodeTableBody");
+
+          // Clear the table
+          tbody.innerHTML = "";
+
+          // Loop through all nodes and populate the table
+          for (var i = 0; i < jsonData.nodes.length; i++) {
+            var node = jsonData.nodes[i];
+
+            var tr = document.createElement("tr");
+
+            var idCell = document.createElement("td");
+            idCell.textContent = node.id;
+            tr.appendChild(idCell);
+
+            var typeCell = document.createElement("td");
+            typeCell.textContent = node.type || "unknown";
+            tr.appendChild(typeCell);
+
+            var datasetCell = document.createElement("td");
+            datasetCell.textContent = node.dataset;
+            tr.appendChild(datasetCell);
+
+            tr.addEventListener("click", function() {
+              handleNodeClick(node.id);
+            });
+
+            tbody.appendChild(tr);
+          }
+        }
+
+        // Populate the table with initial data
+        populateTable();
+
+        // Add event listener to search button
+        var searchButton = document.getElementById("searchButton");
+        searchButton.addEventListener("click", executeSearch);
+      })
+      .catch(error => {
+        console.error('Error loading JSON data:', error);
+      });
+  </script>
+<!--内容部分-->
+<div class="con left">
+    <div class="con_div">
+        <div class="con_div_text left">
+            <div class="con_div_text01 left">
+                <div class="left text01_div">
+                    <p>Suspicious nodes</p>
+                    <p>92</p>
+                </div>
+            </div>
+            <div class="con_div_text01 right">
+                <div class="left text01_div">
+                    <p>company</p>
+                    <p>55</p>
+                </div>
+            </div>
+        </div>
+        <div class="con_div_text left">
+            <div class="con_div_text01 left">
+                <div class="left text01_div">
+                    <p>organization</p>
+                    <p class="sky">10</p>
+                </div>
+            </div>
+            <div class="con_div_text01 right">
+                <div class="left text01_div">
+                    <p>person</p>
+                    <p class="sky">7</p>
+                </div>
+            </div>
+        </div>
+        <div class="con_div_text left">
+
+            <div class="con_div_text01 left">
+                <div class="left text01_div">
+                    <p>vessel</p>
+                    <p class="org">3</p>
+                </div>
+            </div>
+            <div class="con_div_text01 right">
+                <div class="left text01_div">
+                    <p>location</p>
+                    <p class="org">4</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--统计分析图-->
+    <div class="div_any">
+        <div class="left div_any01">
+            <div class="div_any_child">
+                <div class="div_any_title">Suspicious node edges</div>
+                <p id="pieChart1" class="p_chart"></p>
+            </div>
+            <div class="div_any_child">
+              <div class="div_any_title">Normal Distribution Graph of Hops for Nodes.</div>
+              <div id="normalDistributionChart" class="p_chart" style="width: 100%; height: 400px;"></div>
+            </div>            
+        </div>
+        <div class="right div_any01">
+            <div class="div_any_child">
+                <div class="div_any_title">Edge Number Summary</div>
+                <p id="lineChart" class="p_chart"></p>
+            </div>
+            <div class="div_any_child">
+                <div class="div_any_title">Node's Weight Summary</div>
+                <p id="lineChart2" class="p_chart"></p>
+            </div>
+        </div>
+          <div class="table-container" style="width: 48%; height: 690px; padding-left: 1.25%; top: 80px; overflow: auto;">
+            <table id="nodeTable"style="border: 1px solid white;border-collapse: collapse;" >
+              <thead>
+                <tr>
+                    <th style="color: white;">ID</th>
+                    <th style="color: white;">Type</th>
+                    <th style="color: white;">Dataset</th>
+                  </tr>
+              </thead>
+              <tbody id="nodeTableBody" style="color: white;border: 1px solid white;border-collapse: collapse;">
+              </tbody>
+            </table>
+          </div>
+          
+    </div>
+
+</div>
+</body>
+</html>
