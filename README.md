@@ -1,58 +1,58 @@
 # vast-challenge-mini1
 This is a project code about vast challenge mini1.
 
-**这个项目代码的运行方式：**
+**How this project code works:**
 
-打开cmd，进入code文件夹，输入 python -m http.server，打开浏览器进入localhost:8000
+Open cmd, enter the code folder, enter python -m http.server, open the browser and enter localhost:8000
 
 
 
-我们使用主要使用D3在html中进行可视化，并结合python对数据进行处理和分析。
+We mainly use D3 to visualize in html, combined with python to process and analyze data.
 
 1. how we choose the starting point
 
-   1.我们首先要分析出异常节点，接着通过归纳分析异常节点的特征，为后续判断其他实体提供帮助。为了分析出异常节点，我们结合weight属性，统计了不同类型边对应节点的个数，得到9维数据，通过马氏距离度量方法计算每个节点与均值之间的距离，建立距离与颜色的映射关系，用circular可视化出来，我们通过观察颜色深浅判断异常节点。
+    1. We must first analyze the abnormal nodes, and then analyze the characteristics of the abnormal nodes by induction to provide help for subsequent judgments of other entities. In order to analyze the abnormal nodes, we combined the weight attribute, counted the number of nodes corresponding to different types of edges, obtained 9-dimensional data, calculated the distance between each node and the mean value through the Mahalanobis distance measurement method, and established the mapping of distance and color The relationship is visualized with circular, and we judge abnormal nodes by observing the color depth.
 
-   2.同时我们统计了每一类节点对应边个数，得到4维数据，首先使用PCA对4维数据降维至3维，接着使用k-means对三维数据可视化，通过可视化聚类中心位置，将同一类节点绘制成相同颜色。观察节点在三维空间中的分布，我们可以判断出异常节点。
+    2. At the same time, we counted the number of edges corresponding to each type of node to obtain 4-dimensional data. First, we used PCA to reduce the dimension of the 4-dimensional data to 3-dimensional, and then used k-means to visualize the three-dimensional data. By visualizing the position of the cluster center, Paint nodes of the same type the same color. Observing the distribution of nodes in three-dimensional space, we can judge abnormal nodes.
 
-   3.我们还根据weight属性值，将四种边类型和九种点类型转化为36维数据，每一维度代表边为相应属性且点为相应属性的边的权重和。使用DBSCAN基于密度的聚类方法对36维度特征数据进行聚类，DBSCAN算法可以帮助我们直接找出偏离每个聚类中心的异常点，我们对eps与min_samples进行调参，进行了22050,次训练，统计了22050次中每个点出现异常的次数，最后用柱状图和层次饼图表示。DBSCAN找出的偏离点就是可能非法捕捞的异常点。接着我们对36维数据进行bandwith聚类，经过100次模型迭代，发现bandwith=55效果最好，能从3428个点中将点分为两类，其中8个点为一类，为异常点。最后我们把36维数据降维2维与3维，方便可视化。
+    3. We also converted the four edge types and nine point types into 36-dimensional data according to the value of the weight attribute. Each dimension represents the weight sum of the edges with the corresponding attributes and the points with the corresponding attributes. Use the DBSCAN density-based clustering method to cluster the 36-dimensional feature data. The DBSCAN algorithm can help us directly find the abnormal points that deviate from each cluster center. We adjusted the parameters of eps and min_samples and performed 22050 times of training , counted the number of abnormal occurrences of each point in 22050 times, and finally expressed it with a histogram and a hierarchical pie chart. The deviation points found by DBSCAN are abnormal points that may be illegally fished. Then we performed bandwith clustering on the 36-dimensional data. After 100 model iterations, we found that bandwith=55 works best, and can divide points into two categories from 3428 points, of which 8 points belong to one category and are abnormal points. Finally, we reduced the 36-dimensional data to 2D and 3D for easy visualization.
 
-2. 重要设计决策理由
+2. Key Design Decision Reasons
 
-   1.降维——2，3维数据好可视化
+    1. Dimensionality reduction - 2, 3D data is easy to visualize
 
-   2.聚类——由于没有已知哪些指标与非法捕捞相关，因此选择用无监督学习方法进行判断，通过观察不同类包含点的个数，以及各个节点离聚类中心的距离，可以判断是否异常
+    2. Clustering——Since there is no known indicator related to illegal fishing, unsupervised learning method is used for judgment. By observing the number of points contained in different classes and the distance between each node and the cluster center, it can be judged whether abnormal
 
-   3.有向力图——通过有向力图可以显示所有节点，将其他分析结果呈现在有向力图上
+    3. Directed force graph - all nodes can be displayed through the directed force graph, and other analysis results can be presented on the directed force graph
 
-   4.将点与边的特征尽可能提取——36维数据
+    4. Extract the features of points and edges as much as possible - 36-dimensional data
 
-3. 可视化和交互起到的作用
+3. The role of visualization and interaction
 
-   1.k-means中，通过引用OrbitControls库，实现了3D图像展示，用户可以任意拖动图像，更好的观察各节点分布情况以及其与聚类中心的距离。同时增加搜索标注功能，用户可以搜索想要了解的节点ID，对应ID会加粗标红显示在网页中。用户还可以调整超参数K和迭代次数，以寻找最佳效果。
+    1. In k-means, by referencing the OrbitControls library, 3D image display is realized. Users can drag the image arbitrarily to better observe the distribution of each node and the distance from the cluster center. At the same time, the search and mark function is added. Users can search for the node ID they want to know, and the corresponding ID will be displayed in bold and red on the web page. Users can also tune hyperparameters K and number of iterations to find the best results.
 
-   2.有向力图中，用户不仅可以点击某节点进行分析，也可以进行搜索，同时可以设置跳数，以显示设置跳数以内与目标节点相连的节点。其中通过其他分析得出的异常节点，如果在给定跳数内与节点相连，将标红显示，同时在页面右侧会有节点信息显示，并统计连接到的异常节点个数。
+    2. In the directed force graph, the user can not only click on a node for analysis, but also search. At the same time, the number of hops can be set to display the nodes connected to the target node within the set hop number. Among them, the abnormal nodes obtained through other analysis, if they are connected to the node within a given number of hops, will be displayed in red, and the node information will be displayed on the right side of the page, and the number of abnormal nodes connected to will be counted.
 
-   3.DBSCAN中，通过柱状图和层次饼图表示每个点被认为是异常点的次数，被认为是异常点的次数越高，越有可能成为非法捕捞的点。
+    3. In DBSCAN, the number of times each point is considered as an abnormal point is represented by a histogram and a hierarchical pie chart. The higher the number of times considered as an abnormal point, the more likely it is to become an illegal fishing point.
 
-   4.bandwith中，用户可以看到降维之后的可视化结果，用户可以更好的观察异常点在降维空间的位置
+    4. In bandwith, users can see the visualization results after dimension reduction, and users can better observe the position of abnormal points in the dimension reduction space
 
-   5.平行坐标图中，每条线代表一个点，用户可以看到每个点九个维度的权值对比，九个维度分别代表九种类型，若有凸起，则说明该点与该维度所对应类型的点交往密切。同时，该图提供刷选功能，用户可通过鼠标刷选查看特定区域的点的可视化结果。
+    5. In the parallel coordinate diagram, each line represents a point, and the user can see the weight comparison of each point in nine dimensions. The nine dimensions represent nine types. If there is a bump, it means that the point is related to the dimension. The corresponding types of points are closely related. At the same time, the graph provides a selection function, and users can view the visualization results of points in a specific area by selecting them with the mouse.
 
-4. 可视化中的异常
+4. Anomalies in visualization
 
-   1、k-means图中，与聚类中心较远，且类中节点较少的类将被划分为异常点
+    1. In the k-means graph, classes that are far from the cluster center and have fewer nodes in the class will be classified as abnormal points
 
-   2、circular中颜色较深的点将被划分为异常点
+    2. The darker points in the circular will be classified as abnormal points
 
-   3、通过统计各个节点每一跳连接异常节点个数，发现其符合正态分布，求出均值和方差，通过3 sigma法则，结合有向力图中统计的异常节点个数，将之前没有分析到的异常点进行了判断。
+    3. By counting the number of abnormal nodes connected to each node in each hop, it is found that it conforms to the normal distribution, and the mean and variance are calculated. Through the 3 sigma rule, combined with the number of abnormal nodes counted in the directed force graph, the previously unanalyzed outliers were judged.
 
-   4、DBSCAN中，被认为是异常点的次数大于1000的被认为是可能成为非法捕捞的点。
+    4. In DBSCAN, the number of abnormal points considered to be greater than 1000 is considered to be a point that may become illegal fishing.
 
-   5、bandwith中，三维空间中某一线段的端点（用黄色节点表示）为可能成为非法捕捞的点。
+    5. In bandwith, the endpoint of a line segment in three-dimensional space (indicated by a yellow node) is a point that may become illegal fishing.
 
-   6、平行坐标图中，'vessel'维度有凸起的区域为可能成为非法捕捞的点。
+    6. In the parallel coordinates diagram, the raised areas in the 'vessel' dimension are points that may become illegal fishing.
 
-5. 重要假设
+5. Key assumptions
 
-   符合正态分布
+    Fits a normal distribution
